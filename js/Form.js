@@ -103,7 +103,7 @@ class Form{
             this.tell.hide();
             this.play.show();
 
-            speed = Math.round(random(11, 15))
+            speed = Math.round(random(15, 20))
             this.new.html("Your Speed is : " + speed);
             this.new.position(width/2 - 50, height/2 - 100)
             this.new.style("font-family", "verdana");

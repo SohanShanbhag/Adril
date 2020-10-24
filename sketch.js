@@ -1,10 +1,10 @@
 //MAIN VARIABLES//
 
 //Global
-var distance, form, game, gameState = 0, name, coinNumber = 0, lives = 0, player, speed;
+var distance, form, game, gameState = 0, name, coinNumber = 0, lives = 10, player, speed, groundMonster, flyingLand, flyingMonster, arrow, coin, castle, heart;
 
 //Images and Animations
-var playerAnimation, monsterAnimatation, coinAnimation, flyingMonsterAnimation, fireBallImg, castleImg, groundImg, logoImg, backgroundImg, flyingLandImg;
+var playerAnimation1, playerAnimation2, monsterAnimation, coinAnimation, flyingMonsterAnimation, fireBallImg, heartImg, castleImg, groundImg, arrowImg, logoImg, backgroundImg, flyingLandImg;
 
 //Player Ability and feature
 var playerBullet, invisiGround;
@@ -13,15 +13,16 @@ var playerBullet, invisiGround;
 var monsterBullet;
 
 //Groups
-var monsterGroup, coinGroup, flyingMonsterGroup, monsterBulletGroup, playerBulletGroup, flyingLandGroup;
+var monsterGroup, coinGroup, flyingMonsterGroup, heartGroup, monsterBulletGroup, playerBulletGroup, flyingLandGroup;
 
 //Sounds
 var coinSound, hitSound, jumpSound, landSound, loseSound, winSound;
 
 //Preload Images and Files needed
 function preload(){
-    playerAnimation = loadAnimation("images/Player1.png", "images/Player2.png", "images/Player3.png");
-    monsterAnimatation = loadAnimation("images/Monster1.png", "images/Monster2.png");
+    playerAnimation1 = loadAnimation("images/Player1A.png", "images/Player2A.png", "images/Player3A.png");
+    playerAnimation2 = loadAnimation("images/Player1.png", "images/Player2.png", "images/Player3.png");
+    monsterAnimation = loadAnimation("images/Monster1.png", "images/Monster2.png");
     coinAnimation = loadAnimation("images/Coin1.png", "images/Coin2.png", "images/Coin3.png");
     flyingMonsterAnimation = loadAnimation("images/FlyingMonster1.png", "images/FlyingMonster2.png");
     fireBallImg = loadImage("images/FireBall.png");
@@ -30,6 +31,8 @@ function preload(){
     logoImg = loadImage("images/Logo.png");
     backgroundImg = loadImage("images/StartBackground.png");
     flyingLandImg = loadImage("images/FlyingLand.png");
+    arrowImg = loadImage("images/Arrow.png");
+    heartImg = loadImage("images/Heart.png")
 
     monsterGroup = new Group();
     flyingLandGroup = new Group();
@@ -37,6 +40,7 @@ function preload(){
     coinGroup = new Group();
     monsterBulletGroup = new Group();
     playerBulletGroup = new Group();
+    heartGroup = new Group();
 
     jumpSound = loadSound("music/Jump.mp3");
     loseSound = loadSound("music/Lose.flac");
