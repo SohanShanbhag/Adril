@@ -240,14 +240,14 @@ function resetGame(){
         flyingMonster = createSprite(monster2, random(height/2 - 50, height/2));
         flyingMonster.addAnimation("Flying", flyingMonsterAnimation);
         flyingMonster.scale = 0.3;
-        flyingMonster.velocityX = 15;
+        flyingMonster.velocityX = -15;
         flyingMonsterGroup.add(flyingMonster);
     }
 
     for(var bullet = 1000; bullet < 18000; bullet += random(2000, 2500)){
         monsterBullet = createSprite(bullet, groundMonster.y - 50, 30, 5);
         monsterBullet.shapeColor = "red";
-        monsterBullet.velocityX = 10;
+        monsterBullet.velocityX = -10;
 
         monsterBulletGroup.add(monsterBullet);
     }
