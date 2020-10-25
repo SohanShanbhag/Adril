@@ -1,6 +1,9 @@
+
 class Game{
     constructor(){
         this.restart = createButton("Restart");
+
+        this.refresh = createButton("Refresh Browser if you forgot to press the button last time")
     }
 
     async start(){
@@ -35,7 +38,7 @@ class Game{
             flyingMonster = createSprite(monster2, random(height/2 - 50, height/2));
             flyingMonster.addAnimation("Flying", flyingMonsterAnimation);
             flyingMonster.scale = 0.3;
-            flyingMonster.velocityX = 15;
+            flyingMonster.velocityX = -15;
             flyingMonsterGroup.add(flyingMonster);
         }
 
@@ -49,7 +52,7 @@ class Game{
         for(var bullet = 1000; bullet < 18000; bullet += random(2000, 2500)){
             monsterBullet = createSprite(bullet, groundMonster.y - 50, 30, 5);
             monsterBullet.shapeColor = "red";
-            monsterBullet.velocityX = 10;
+            monsterBullet.velocityX = -10;
 
             monsterBulletGroup.add(monsterBullet);
         }
@@ -84,7 +87,15 @@ class Game{
         this.restart.style("background", "yellow");
         this.restart.style("font-weight", "bold");
 
-        player.velocityX = 30;
+        this.refresh.position(width/2, height/2);
+        this.refresh.style("width", "500px");
+        this.refresh.style("height", "50px");
+        this.refresh.style("background", "cyan");
+        this.refresh.style("font-weight", "bold");
+
+        this.refresh.hide();
+
+        player.velocityX = 100;
         monsterBullet.velocityX = speed;
 
         image(groundImg, 0, height/2 + 300, width*14, 250);
@@ -141,7 +152,6 @@ class Game{
                 heartGroup[life].destroy();
                 winSound.play();
                 lives += 1;
-                // player.addAnimation("Player2",playerAnimation2);
             }
         }
 
@@ -156,38 +166,50 @@ class Game{
         player.collide(invisiGround);
 
         this.restart.mousePressed(()=>{
-            reset();
+            resetGame();
         });
 
-        if(player.collide(castle)){
+        if(player.collide(castle) && lives > 0){
+            this.refresh.show();
             gameState = 3;
+            this.restart.hide();
             Swal.fire({
                 title: 'VICTORY',
                 icon: 'success',
-                confirmButtonText: "Great!",
+                confirmButtonText: "Click Me to Restart the Game!",
                 showCancelButton: true,
-                showDenyButton: true,
-                denyButtonText: `Restart Game`,
+                showCloseButton: true,
                 text: "Well Done! You won the Game by reaching the safe house",
             }).then((result)=>{
-                if(result.isDenied){
+                if(result.isConfirmed){
                     gameState = 2;
-                    reset();
+                    resetGame();
                 }
 
-                if(result.isConfirmed){
-                    var slider = document.getElementById("myRange");
-                    var output = document.getElementById("demo");
-                    output.innerHTML = slider.value;
-                    
-                    slider.oninput = function() {
-                      output.innerHTML = this.value;
-                    }
+                // if(result.isConfirmed){
+                //     location.reload();
+                // }
+            })
 
-                    swal({
-                        text: output.innerHTML,
-                    content: slider,
-                    });
+            this.refresh.mousePressed(()=>{
+                location.reload();
+            })
+        }
+
+        if(lives <= 0){
+            gameState = 3;
+            Swal.fire({
+                title: "Oops....",
+                icon: "error",
+                text: "You lost all your lives, " + name + ". But it is okay, restart the game and show the evil monsters that you are capable of anything!",
+                showCancelButton: true,
+                showCloseButton: true,
+                confirmButtonText: "Click Me to Restart the Game!",
+                
+            }).then((result)=>{
+                if(result.isConfirmed){
+                    gameState = 2;
+                    resetGame();
                 }
             })
         }
@@ -196,7 +218,11 @@ class Game{
     }
 }
 
-function reset(){
+function resetSite(){
+    gameState = 0;
+}
+
+function resetGame(){
     player.x = width - 700;
     player.y = height/2 + 300;
     lives = 10;
@@ -218,13 +244,6 @@ function reset(){
         flyingMonsterGroup.add(flyingMonster);
     }
 
-    // for(var play = 1000; play < 18000; play += random(2000, 2500)){
-    //     coin = createSprite(play, random(player.y, player.y - 200));
-    //     coin.addAnimation("Coin", coinAnimation);
-    //     coin.scale = 0.3;
-    //     coinGroup.add(coin);
-    // }
-
     for(var bullet = 1000; bullet < 18000; bullet += random(2000, 2500)){
         monsterBullet = createSprite(bullet, groundMonster.y - 50, 30, 5);
         monsterBullet.shapeColor = "red";
@@ -232,14 +251,6 @@ function reset(){
 
         monsterBulletGroup.add(monsterBullet);
     }
-
-    // for(var land = 3000; land < 18000; land += random(3000, 3500)){
-    //     flyingLand = createSprite(land, random(height/2 + 20, height/2), 10, 10);
-    //     flyingLand.addImage(flyingLandImg);
-    //     flyingLand.scale = 0.5;
-
-    //     flyingLandGroup.add(flyingLand);
-    // }
 
     for(var mon = 0; mon < flyingLandGroup.length; mon += 2){
         heart = createSprite(flyingLandGroup[mon].x, flyingLandGroup[mon].y - 50);
