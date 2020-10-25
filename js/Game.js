@@ -95,7 +95,7 @@ class Game{
 
         this.refresh.hide();
 
-        player.velocityX = 100;
+        player.velocityX = speed;
         monsterBullet.velocityX = speed;
 
         image(groundImg, 0, height/2 + 300, width*14, 250);
