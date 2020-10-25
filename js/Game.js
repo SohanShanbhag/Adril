@@ -105,7 +105,7 @@ class Game{
         camera.position.y = height/2;
         camera.position.x = player.x;
 
-        if(touches.length === 1 && player.y > 600 || keyDown("space") && player.y > 600){
+        if(touches.length === 1 && player.y > 600 || keyDown("space") && player.y > 728){
             player.velocityY = -30;
             jumpSound.play();
         }
