@@ -23,7 +23,7 @@ class Game{
             flyingLandGroup.add(flyingLand);
         }
 
-        invisiGround = createSprite(width/2 + 5000, height/2 + 400, 50000, 100);
+        invisiGround = createSprite(width/2 + 5000, height/2 + 600, 50000, 100);
         invisiGround.visible = false;
 
         for(var monster = 2000; monster < 18000; monster += 3000){
