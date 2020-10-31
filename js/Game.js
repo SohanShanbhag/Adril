@@ -14,16 +14,20 @@ class Game{
 
         player = createSprite(width - 800, height/2 + 300);
         player.addAnimation("Player", playerAnimation2);
+        // player.debug = true;
+        player.setCollider("circle", 0, 0, 60)
 
         for(var land = 3000; land < 18000; land += random(3000, 3500)){
-            flyingLand = createSprite(land, random(height/2 + 20, height/2), 10, 10);
+            flyingLand = createSprite(land, random(height/2 + 10, height/2), 10, 10);
             flyingLand.addImage(flyingLandImg);
             flyingLand.scale = 0.5;
+
+            // flyingLand.debug = true;
 
             flyingLandGroup.add(flyingLand);
         }
 
-        invisiGround = createSprite(width/2 + 5000, height/2 + 600, 50000, 100);
+        invisiGround = createSprite(width/2 + 5000, height/2 + 400, 50000, 100);
         invisiGround.visible = false;
 
         for(var monster = 2000; monster < 18000; monster += 3000){
@@ -105,7 +109,7 @@ class Game{
         camera.position.y = height/2;
         camera.position.x = player.x;
 
-        if(touches.length === 1 && player.y > 600 || keyDown("space") && player.y > 728){
+        if(touches.length === 1 && player.y > 600 || keyDown("space") && player.y > 600){
             player.velocityY = -30;
             jumpSound.play();
         }
@@ -141,8 +145,11 @@ class Game{
             }
         }
         for(var collide4 = 0; collide4 < flyingLandGroup.length; collide4 ++){
-            if(player.isTouching(flyingLandGroup[collide4])){
-                player.collide(flyingLandGroup[collide4])
+            if(flyingLandGroup.isTouching(player)){
+                player.collide(flyingLandGroup[collide4]);
+                player.velocityY += 1;
+                // player.velocityY = 0;
+                // player.velocityX = 0;
                 landSound.play();
             }
         }
@@ -227,6 +234,16 @@ function resetGame(){
     player.y = height/2 + 300;
     lives = 10;
     coinNumber = 0;
+
+    for(var hit1 = 0; hit1 < monsterGroup.length; hit1 ++){
+            monsterGroup[hit1].destroy();
+    }
+    for(var hit2 = 0; hit2 < flyingMonsterGroup.length; hit2 ++){
+        flyingMonsterGroup[hit2].destroy();
+    }
+    for(var hit3 = 0; hit3 < monsterBulletGroup.length; hit3 ++){
+            monsterBulletGroup[hit3].destroy();
+    }
 
     for(var monster = 2000; monster < 18000; monster += 3000){
         groundMonster = createSprite(monster, player.y);
