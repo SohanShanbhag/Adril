@@ -68,7 +68,7 @@ class Game{
             monsterGroup.add(groundMonster);
         }
 
-        for(var monster2 = 2000; monster2 < 18000; monster2 += random(2000, 2500)){
+        for(var monster2 = 2000; monster2 < 22000; monster2 += random(2000, 2500)){
             flyingMonster = createSprite(monster2, random(height/2 - 50, height/2));
             flyingMonster.addAnimation("Flying", flyingMonsterAnimation);
             flyingMonster.scale = 0.3;
