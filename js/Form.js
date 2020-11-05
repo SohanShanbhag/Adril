@@ -30,6 +30,7 @@ class Form{
     display(){
         this.play.hide();
         this.reset.hide();
+        this.speed.hide();
 
         this.instruct1.html("Enter your name in the box below");
         this.instruct1.position(width/2 - 130, height/2 - 170);
@@ -50,6 +51,7 @@ class Form{
         this.start.style("height", "30px");
         this.start.style("background", "yellow");
         this.start.style("font-weight", "bold");
+        this.start.style("cursor", "pointer");
 
         this.instruct2.html("Play This Game on Mobile and PC");
         this.instruct2.style("color", "yellow");
@@ -86,6 +88,9 @@ class Form{
         this.speed.style("height", "30px");
         this.speed.style("background", "yellow");
         this.speed.style("font-weight", "bold");
+        this.speed.style("cursor", "pointer");
+
+        this.speed.show();
 
         this.greet.html("Hello " + name);
         this.greet.position(width/2 - 0, height/2 - 100);
@@ -123,5 +128,6 @@ class Form{
     hideSpeed(){
         this.play.hide();
         this.new.hide();
+        this.speed.hide();
     }
 }

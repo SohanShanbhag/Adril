@@ -3,7 +3,9 @@ class Game{
     constructor(){
         this.restart = createButton("Restart");
 
-        this.refresh = createButton("Refresh Browser if you forgot to press the button last time")
+        this.refresh = createButton("Refresh Browser if you forgot to press the button last time");
+
+        this.rate = createButton("Rate Game");
     }
 
     async start(){
@@ -11,6 +13,34 @@ class Game{
             form = new Form;
             form.display();
         }
+
+        this.refresh.hide();
+        this.restart.hide();
+
+        this.rate.hide();
+
+        this.rate.position(width/2 - 665, height/2 - 340);
+        this.rate.style("width", "170px");
+        this.rate.style("height", "30px");
+        this.rate.style("background", "gold");
+        this.rate.style("font-weight", "bold");
+        this.rate.style("cursor", "pointer");
+
+        this.rate.mousePressed(()=>{
+            Swal.fire({
+                title: "Rate The Game",
+                input: "number",
+            }), function(text) {
+
+                // check the length of "text" instead of "inputValue"
+                // since that's what you're passing into the function
+            
+                if (text.value > 5) {
+                    swal.showInputError("You have exceeded 140 characters!");
+                    return false;
+                }
+             };
+        })
 
         player = createSprite(width - 800, height/2 + 300);
         player.addAnimation("Player", playerAnimation2);
@@ -27,8 +57,8 @@ class Game{
             flyingLandGroup.add(flyingLand);
         }
 
-        invisiGround = createSprite(width/2 + 5000, height/2 + 400, 50000, 100);
-        invisiGround.visible = false;
+        invisiGround = createSprite(width/2 + 5000, height/2 + 370, 50000, 100);
+        invisiGround.visible = true;
 
         for(var monster = 2000; monster < 18000; monster += 3000){
             groundMonster = createSprite(monster, player.y);
@@ -79,6 +109,8 @@ class Game{
     speed(){
         form.hide();
 
+        this.rate.hide();   
+
         form.speedDisplay();
     }
 
@@ -90,12 +122,16 @@ class Game{
         this.restart.style("height", "30px");
         this.restart.style("background", "yellow");
         this.restart.style("font-weight", "bold");
+        this.restart.style("cursor", "pointer")
 
         this.refresh.position(width/2, height/2);
         this.refresh.style("width", "500px");
         this.refresh.style("height", "50px");
         this.refresh.style("background", "cyan");
         this.refresh.style("font-weight", "bold");
+        this.refresh.style("cursor", "pointer");
+
+        this.rate.hide();
 
         this.refresh.hide();
 
@@ -109,7 +145,7 @@ class Game{
         camera.position.y = height/2;
         camera.position.x = player.x;
 
-        if(touches.length === 1 && player.y > 600 || keyDown("space") && player.y > 600){
+        if(touches.length === 1 && player.y > 611 || keyDown("space") && player.y>= 612){
             player.velocityY = -30;
             jumpSound.play();
         }
@@ -150,7 +186,7 @@ class Game{
                 player.velocityY += 1;
                 // player.velocityY = 0;
                 // player.velocityX = 0;
-                landSound.play();
+                // landSound.play();
             }
         }
 
@@ -193,9 +229,6 @@ class Game{
                     resetGame();
                 }
 
-                // if(result.isConfirmed){
-                //     location.reload();
-                // }
             })
 
             this.refresh.mousePressed(()=>{
