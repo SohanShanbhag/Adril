@@ -58,7 +58,7 @@ class Game{
         }
 
         invisiGround = createSprite(width/2 + 5000, height/2 + 370, 50000, 100);
-        invisiGround.visible = true;
+        invisiGround.visible = false;
 
         for(var monster = 2000; monster < 18000; monster += 3000){
             groundMonster = createSprite(monster, player.y);
